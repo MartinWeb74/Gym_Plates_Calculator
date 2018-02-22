@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+  <script src="https://unpkg.com/vue@2.5.13/dist/vue.js"></script>
+  <title>5/3/1 Routine</title>
+  
+<style>
+  *, div, h3, p, li, button {font-family: 'Roboto', sans-serif; }  
+  html {font-size: 18px;}
+@media print { 
+  .container {width: 1000px; margin: 10px auto;}
+  .no-print {display: none;}
+   table.table {
+    font-size: 20pt; 
+    width: 1000px;
+    margin: 0;
+  }
+  h1 {font-size: 24pt; text-align: center; margin-bottom: 25px;}
+}
+</style>  
+  
+</head>
+<body>
+
+<div class="container" id="intro">
+ 
+ <div class="row no-print">
+  <img src="routine531.jpg" alt="5/3/1 Routine">
+ </div>
+ 
+ <div class="row no-print">
+  <div class="well">
+  <p>Current weights:</p>
+  <ul>
+    <li>Squats: {{ squat }}</li>
+    <li>Bench: {{ bench }}</li>
+    <li>Dealift: {{ deadlift }}</li>
+    <li>Military Press: {{ military }}</li>
+  </ul>
+
+   <!-- print the rutine -->
+   <button type="button" class="btn btn-info" onclick="window.print()">Print</button>
+   </div>
+ </div>
+ 
+ <div class="row">
+ 
+ <h1>{{ exercise }}</h1>
+
+   <table class="table table-bordered">
+     <th>S</th>
+     <th>3 x 5</th>
+     <th>3 x 3</th>
+     <th>5/3/1</th>
+     <th>Deload</th>
+     
+     <tr>
+       <td>1</td>
+       <td>{{ percentage(40) }}<br>{{ plates( percentage(40) ) }}</td>
+       <td>{{ percentage(40) }}<br>{{ plates( percentage(40) ) }}</td>
+       <td>{{ percentage(40) }}<br>{{ plates( percentage(40) ) }}</td>
+       <td>{{ percentage(40) }}</td>
+     </tr>
+     
+     <tr>
+       <td>2</td>
+       <td>{{ percentage(50) }}<br>{{ plates( percentage(50) ) }}</td>
+       <td>{{ percentage(50) }}<br>{{ plates( percentage(50) ) }}</td>
+       <td>{{ percentage(50) }}<br>{{ plates( percentage(50) ) }}</td>
+       <td>{{ percentage(50) }}</td>
+     </tr>
+     
+     <tr>
+       <td>3</td>
+       <td>{{ percentage(60) }}<br>{{ plates( percentage(60) ) }}</td>
+       <td>{{ percentage(60) }}<br>{{ plates( percentage(60) ) }}</td>
+       <td>{{ percentage(60) }}<br>{{ plates( percentage(60) ) }}</td>
+       <td>{{ percentage(60) }}</td>
+     </tr>
+     
+     <tr>
+       <td>4</td>
+       <td>{{ percentage(65) }}<br>{{ plates( percentage(65) ) }}</td>
+       <td>{{ percentage(70) }}<br>{{ plates( percentage(70) ) }}</td>
+       <td>{{ percentage(75) }}<br>{{ plates( percentage(75) ) }}</td>
+       <td>--</td>
+     </tr>
+     
+     <tr>
+       <td>5</td>
+       <td>{{ percentage(75) }}<br>{{ plates( percentage(75) ) }}</td>
+       <td>{{ percentage(80) }}<br>{{ plates( percentage(80) ) }}</td>
+       <td>{{ percentage(85) }}<br>{{ plates( percentage(85) ) }}</td>
+       <td>--</td>
+     </tr>
+     
+     <tr>
+       <td>6</td>
+       <td>{{ percentage(85) }}<br>{{ plates( percentage(85) ) }}</td>
+       <td>{{ percentage(90) }}<br>{{ plates( percentage(90) ) }}</td>
+       <td>{{ percentage(95) }}<br>{{ plates( percentage(95) ) }}</td>
+       <td>--</td>
+     </tr>
+ 
+   </table>
+   
+ </div> <!-- // end of table -->
+ 
+ 
+ </div> <!-- // end of container -->
+
+  <script type = "text/javascript">
+     var vue_det = new Vue({
+        el: '#intro',
+        data: {
+          squat: 130,
+          bench: 130,
+          deadlift: 165,
+          military: 60,
+          exercise: "Military Press", // "Squats" "Deadlift" "Chest Press" "Military Press"
+          weight: 60  // update this variable to match exercise
+        },
+       methods: {
+          percentage: function(n) { 
+            n = n / 100;
+            let w = (this.weight / 2); 
+            return (w * n).toFixed(2);
+          },
+          plates: function(p) {
+            let w = p;
+            let leftover = 0; 
+            let output = "";
+            let a45 = Math.floor(w / 45);
+            leftover = w % 45;            
+            let a25 = Math.floor(leftover / 25);
+            leftover = leftover % 25;            
+            let a10 = Math.floor(leftover / 10);
+            leftover = leftover % 10;            
+            let a05 = Math.floor(leftover / 5);
+            leftover = leftover % 5;            
+            let a02 = Math.floor(leftover / 2.5);
+            leftover = leftover % 2.5; 
+            
+            showPlates("45 : ", a45)
+            showPlates("25 : ", a25)
+            showPlates("10 : ", a10)
+            showPlates("5 : ", a05)
+            showPlates("2.5 : ", a02)
+            
+            // text is plate size to display, quantity is how many to display
+            function showPlates(text, quantity) {
+              while (quantity > 0) {
+                output += text;
+                quantity--;
+              }
+            }
+            
+            return output;
+          }
+       }
+       
+     });
+  </script>
+
+ 
+  
+</body>
+</html>
